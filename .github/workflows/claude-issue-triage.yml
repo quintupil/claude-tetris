@@ -29,4 +29,4 @@ jobs:
             1. Lee el título y cuerpo del issue.
             2. Asigna (con `gh issue edit`) los labels que correspondan de entre los ya existentes en el repo (bug, documentation, duplicate, enhancement, good first issue, help wanted, invalid, question, wontfix). No crees labels nuevos.
             3. Publica un comentario en el issue (con `gh issue comment`) con un diagnóstico general en español: causa probable del problema, qué parte de game.js/index.html/style.css está probablemente involucrada, y cualquier duda que deba aclarar quien reportó el issue. NO implementes la solución ni escribas código de cambio todavía, solo el diagnóstico. El comentario debe estar escrito en formato Markdown válido y bien interpretable por GitHub (usa encabezados, listas y bloques de código con la sintaxis correcta).
-          claude_args: '--allowed-tools "Bash(gh issue edit:*),Bash(gh issue comment:*)"'
+          claude_args: '--allowed-tools "Read,Grep,Glob,Bash(gh issue edit:*),Bash(gh issue comment:*)"'
