@@ -39,8 +39,12 @@ const overlay = document.getElementById('overlay');
 const overlayTitle = document.getElementById('overlay-title');
 const overlayScore = document.getElementById('overlay-score');
 const restartBtn = document.getElementById('restart-btn');
+const themeToggle = document.getElementById('theme-toggle');
 
-let board, current, next, score, lines, level, paused, gameOver, lastTime, dropAccum, dropInterval, animId;
+const GRID_COLORS = { dark: '#22222e', light: '#e2e2ec' };
+const THEME_STORAGE_KEY = 'tetris-theme';
+
+let board, current, next, score, lines, level, paused, gameOver, lastTime, dropAccum, dropInterval, animId, theme;
 
 function createBoard() {
   return Array.from({ length: ROWS }, () => new Array(COLS).fill(0));
@@ -169,7 +173,7 @@ function drawBlock(context, x, y, colorIndex, size, alpha) {
 }
 
 function drawGrid() {
-  ctx.strokeStyle = '#22222e';
+  ctx.strokeStyle = GRID_COLORS[theme];
   ctx.lineWidth = 0.5;
   for (let c = 1; c < COLS; c++) {
     ctx.beginPath();
@@ -256,7 +260,24 @@ function loop(ts) {
   animId = requestAnimationFrame(loop);
 }
 
+function applyTheme() {
+  document.body.classList.toggle('light-theme', theme === 'light');
+  themeToggle.checked = theme === 'light';
+}
+
+function setTheme(newTheme) {
+  theme = newTheme;
+  localStorage.setItem(THEME_STORAGE_KEY, theme);
+  applyTheme();
+}
+
+themeToggle.addEventListener('change', () => {
+  setTheme(themeToggle.checked ? 'light' : 'dark');
+});
+
 function init() {
+  theme = localStorage.getItem(THEME_STORAGE_KEY) === 'light' ? 'light' : 'dark';
+  applyTheme();
   board = createBoard();
   score = 0;
   lines = 0;
